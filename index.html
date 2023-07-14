@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Making the Grade</title>
+</head>
+<body>
+  <h1>HW 3 - Making the Grade</h1>
+  <div id="output"></div>
+
+  <script>
+    var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+
+    // Split the 'grades' string into an array of student strings
+    var studentStrings = grades.split(', ');
+
+    // Create an empty array to store the student objects
+    var students = [];
+
+    // Iterate over each student string and extract the name and grade
+    for (var i = 0; i < studentStrings.length; i++) {
+      var studentString = studentStrings[i];
+      var [name, score] = studentString.split('|');
+
+      // Capitalize the first letter of the student's name
+      var capitalized = name.charAt(0).toUpperCase() + name.slice(1);
+
+      // Create a student object with capitalized name and score
+      var student = {
+        name: capitalized,
+        score: parseInt(score)
+      };
+
+      // Add the student object to the array
+      students.push(student);
+    }
+
+    // Sort the students array alphabetically by name
+    students.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Get the output element from the HTML
+    var outputElement = document.getElementById("output");
+
+    // Create a string to store the output
+    var output = "";
+
+    // Calculate the total number of students
+    var totalStudents = students.length;
+    output += "<strong>Total number of students:</strong> " + totalStudents + "<br>";
+
+    // Display each student's name and score
+    for (var j = 0; j < students.length; j++) {
+      var student = students[j];
+      output += student.name + " - " + student.score + "<br>";
+    }
+
+    // Find the lowest and highest scores
+    var lowestScore = Math.min(...students.map(student => student.score));
+    var highestScore = Math.max(...students.map(student => student.score));
+    output += "<strong>Lowest score:</strong> " + lowestScore + "<br>";
+    output += "<strong>Highest score:</strong> " + highestScore + "<br>";
+
+    // Calculate the average score
+    var sumScores = students.reduce((total, student) => total + student.score, 0);
+    var averageScore = sumScores / totalStudents;
+    output += "<strong>Average score:</strong> " + averageScore.toFixed(2);
+
+    // Set the output as the content of the output element
+    outputElement.innerHTML = output;
+  </script>
+</body>
+</html>
+
+
